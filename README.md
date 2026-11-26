@@ -4,6 +4,10 @@
 
 A *katori* is the small steel bowl a portion is served in.
 
+**Live demo: [gangadharsingh.me/Katori-Food-Waste-Management](https://gangadharsingh.me/Katori-Food-Waste-Management/)** · [API docs](https://katori-zj9l.onrender.com/api/docs)
+
+Step in as a resident, the kitchen or the mess manager with one click. The API runs on a free plan that sleeps when idle, so the first visit can take most of a minute to wake it; the page says so and offers a game meanwhile.
+
 ![Manager overview](docs/screenshots/overview.png)
 
 ## What each person gets
