@@ -1,0 +1,22 @@
+# Render Blueprint: one free web service running the Docker image (API + web app).
+# The demo keeps its data in SQLite inside the container, so no database service is needed.
+services:
+  - type: web
+    name: katori
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: KATORI_DEMO
+        value: "1"
+      - key: KATORI_SECRET
+        generateValue: true
+      # The image is rebuilt weekly (see .github/workflows/refresh.yml), which retrains the models,
+      # so the running container only retrains by itself if that has not happened for a week.
+      - key: KATORI_RETRAIN_DAYS
+        value: "7"
+      # Origins allowed to call the API from a browser: the GitHub Pages copy of the web app.
+      - key: KATORI_CORS_ORIGINS
+        value: https://gangadhar017.github.io,https://gangadharsingh.me,http://gangadharsingh.me
