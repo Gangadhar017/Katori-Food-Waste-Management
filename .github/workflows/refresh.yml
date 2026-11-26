@@ -1,0 +1,25 @@
+name: Weekly rebuild and retrain
+
+# Rebuilding the image replays the demo hostel up to today and retrains every model on it.
+# Needs the repository secret RENDER_DEPLOY_HOOK (Render > service > Settings > Deploy Hook).
+on:
+  schedule:
+    - cron: "30 21 * * 0" # Monday 03:00 in India
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ask Render to rebuild and deploy
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK" ]; then
+            echo "::notice::RENDER_DEPLOY_HOOK is not set, nothing to do."
+            exit 0
+          fi
+          curl -fsS -X POST "$RENDER_DEPLOY_HOOK" > /dev/null
+          echo "Deploy requested."
