@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { useEffect, type ReactNode } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 import { Loading } from "./components/ui";
 import { Frame, Phone } from "./layouts";
@@ -32,6 +32,9 @@ function Only({ roles, children }: { roles: Role[]; children: ReactNode }) {
 
 export function App() {
   useTheme();
+  // A new section starts at its top, not wherever the last one was scrolled to.
+  const { pathname } = useLocation();
+  useEffect(() => window.scrollTo(0, 0), [pathname]);
   const resident = (page: ReactNode) => (
     <Only roles={["student"]}>
       <Phone>{page}</Phone>
